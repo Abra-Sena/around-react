@@ -1,0 +1,42 @@
+function handleAvatarUpdate(avatar) {
+    api.setUserAvatar({avatar})
+      .then((res) => {
+        setCurrentUser({...setCurrentUser})
+      })
+      .then(() => handlePopupClose()
+      .catch(err => console.log(err)));
+  }
+
+  function handleTitleChange(evt) {
+    setImageTitle(evt.target.value);
+  }
+  function handleImageLinkChange(evt) {
+    setImageLink(evt.target.value);
+  }
+  function handleNameChange(evt) {
+    setNameInput(evt.target.value);
+  }
+  function handleDescriptionChange(evt) {
+    setDescriptionInput(evt.target.value);
+  }
+  function handleFormSubmit(evt) {
+    evt.preventDefault();
+    setImageLink(imageTitle);
+    setImageLink(imageLink);
+  }
+  function handleDeleteCard(card) {
+    api.removeCard(card._id)
+      .then(() => {
+        card.remove();
+        setDeleteCardPopup(false);
+      })
+      .catch(err => console.log(err));
+  }
+
+   //save user inputs
+  const [nameInput, setNameInput] = React.useState('');
+  const [descriptionInput, setDescriptionInput] = React.useState('');
+  const [imageLink, setImageLink] = React.useState('');
+  const [imageTitle, setImageTitle] = React.useState('');
+  const setCurrentUser = React.useState('');
+  
