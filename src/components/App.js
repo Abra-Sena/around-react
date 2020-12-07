@@ -21,14 +21,14 @@ function App() {
   function handleEditProfileBtn() {
     setEditProfilePopup(true);
   }
-  function handleEditAddCardBtn() {
+  function handleAddCardBtn() {
     setAddNewCardPopup(true);
   }
-  // function handleEscClose(evt) {
-  //   if(evt.which === 27) {
-  //     this.close();
-  //   }
-  // }
+  function handleEscClose(evt) {
+    if(evt.which === 27) {
+      this.close();
+    }
+  }
   function handlePopupClose(evt) {
     if(evt.target !== evt.currentTarget) return;
 
@@ -37,7 +37,7 @@ function App() {
     setAddNewCardPopup(false);
     setDeleteCardPopup(false);
     setSelectedCard(false);
-    // setImageExpand(false);
+    setImageExpand(false);
   }
   function handleDeleteCardBtn() {
     setDeleteCardPopup(true)
@@ -64,9 +64,10 @@ function App() {
         selectedCard={selectedCard}
         handleEditAvatarBtn={handleEditAvatarBtn}
         handleEditProfileBtn={handleEditProfileBtn}
-        handleEditAddCardBtn={handleEditAddCardBtn}
-        handleDeleteCardBtn={handleDeleteCardBtn}
+        handleAddCardBtn={handleAddCardBtn}
+        handleDeleteCardBtn={() => handleDeleteCardBtn()}
         handleCardClick={(card) => handleCardClick(card)}
+        handleEscClose={handleEscClose}
         onClose={handlePopupClose}
       />
       <Footer />

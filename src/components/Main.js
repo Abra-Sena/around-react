@@ -49,7 +49,7 @@ function Main(props) {
           </div>
           <p className="profile__description">{userDescription}</p>
         </div>
-        <button aria-label="add-card-button" className="add-button" onClick={props.handleEditAddCardBtn}></button>
+        <button aria-label="add-card-button" className="add-button" onClick={props.handleAddCardBtn}></button>
       </section>
 
       <section className="elements">
@@ -71,7 +71,7 @@ function Main(props) {
     </main>
 
     {/* Edit avatar popup */}
-    <PopupWithForm name="edit-avatar" title="Change Profile Picture" submitButton="Save" isOpen={props.isEditAvatar} onClose={props.handlePopupClose} >
+    <PopupWithForm name="edit-avatar" title="Change Profile Picture" submitButton="Save" isOpen={props.isEditAvatar} onClose={props.onClose} >
       <input id="avatar-url" type="url" name="link" onChange={props.handleAvatarUpdate} className="form__input form__input_type_avatar-url" placeholder="Avatar link" required />
       <span id="avatar-url-error" className="form__field form__field_error"></span>
     </PopupWithForm>
@@ -85,7 +85,7 @@ function Main(props) {
     </PopupWithForm>
 
     {/* Add New Card Popup */}
-    <PopupWithForm name="add-card" title="New Place" submitButton="Save" isOpen={props.isAddNewCard} onClose={props.onClose} onSubmit={props.handleFormSubmit}>
+    <PopupWithForm name="add-card" title="New Place" submitButton="Save" isOpen={props.isAddNewCard} onClose={props.onClose}>
       <input id="card-title" type="text" name="name" className="form__input form__input_type_card-title" placeholder="Title" minLength="2" maxLength="30" required />
       <span id="card-title-error" className="form__field form__field_error"></span>
       <input id="card-url" type="url" name="link" className="form__input form__input_type_card-url" placeholder="Image link" required />
@@ -93,10 +93,10 @@ function Main(props) {
     </PopupWithForm>
 
     {/* Delete card confirmation */}
-    <PopupWithForm name="delete" title="Are You Sure?" submitButton="Yes" isOpen={props.isDeleteCard} onClose={props.onClose} onSubmit={props.handleDeleteCard} />
+    <PopupWithForm name="delete" title="Are You Sure?" submitButton="Yes" isOpen={props.isDeleteCard} onClose={props.onClose} />
 
     {/* Expand card on full-screen */}
-    <PopupWithImage card={props.selectedCard} isOpen={props.isImageExpand} onClose={props.onClose} />
+    <PopupWithImage src={props.selectedCard.src} title={props.selectedCard.title} isOpen={props.isImageExpand} onClose={props.onClose} />
 
     </>
   )

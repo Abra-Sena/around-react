@@ -4,7 +4,7 @@ import React from 'react';
 function Card(props) {
   return (
     <li className="element__item">
-      <button type="button" aria-label="delete-card" className="element__delete" onClick={props.handleDeleteCardBtn}></button>
+      <button type="button" aria-label="delete-card" className="element__delete" onClick={props.isDeleteCard}></button>
       <img className="element__photo" src={props.src} alt={props.alt} onClick={props.handleCardClick} />
       <div className="element__details">
         <h2 className="element__name">{props.title}</h2>
