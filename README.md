@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+My fisr React project. The project Around the US is transltaed into React using JSX and Components with React.useEffect for API call and React.useState for needed state variables.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
