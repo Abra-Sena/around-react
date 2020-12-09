@@ -1,8 +1,7 @@
 import React from 'react';
 import api from '../utils/Api';
 import Card from './Card';
-import PopupWithForm from './PopupWithForm';
-import PopupWithImage from './PopupWithImage';
+
 
 function Main(props) {
   const [cards, setCards] = React.useState([]);
@@ -10,27 +9,26 @@ function Main(props) {
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
 
-  //collect info from server: user info
+  //collect info from server
   React.useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setUserAvatar(res.avatar);
-        setUserName(res.name);
-        setUserDescription(res.about);
-      })
-      .catch(err => console.log(err));
+    // promise all about user before rendering data to page
+    api.getAppInfo()
+    .then(([userData, initialCards]) => {
+      // user info
+      setUserAvatar(userData.avatar);
+      setUserName(userData.name);
+      setUserDescription(userData.about);
 
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res.map((cardItem) => ({
-          alt: cardItem.name,
-          title: cardItem.name,
-          src: cardItem.link,
-          id: cardItem._id,
-          likes: cardItem.likes
-        })));
-      })
-      .catch(err => console.log(err));
+      // cards
+      setCards(initialCards.map((cardItem) => ({
+        alt: cardItem.name,
+        title: cardItem.name,
+        src: cardItem.link,
+        id: cardItem._id,
+        likes: cardItem.likes
+      })));
+    })
+    .catch(err => console.log(err));
   }, []);
 
 
@@ -69,35 +67,6 @@ function Main(props) {
         </ul>
       </section>
     </main>
-
-    {/* Edit avatar popup */}
-    <PopupWithForm name="edit-avatar" title="Change Profile Picture" submitButton="Save" isOpen={props.isEditAvatar} onClose={props.onClose} >
-      <input id="avatar-url" type="url" name="link" onChange={props.handleAvatarUpdate} className="form__input form__input_type_avatar-url" placeholder="Avatar link" required />
-      <span id="avatar-url-error" className="form__field form__field_error"></span>
-    </PopupWithForm>
-
-    {/* Edit Profile popup */}
-    <PopupWithForm name="edit-profile" title="Edit Profile" submitButton="Save" isOpen={props.isEditProfile} onClose={props.onClose} >
-      <input id="card-title" type="text" name="name" className="form__input form__input_type_card-title" placeholder="Name" minLength="2" maxLength="30" required />
-      <span id="card-title-error" className="form__field form__field_error"></span>
-      <input id="card-url" type="url" name="link" className="form__input form__input_type_card-url" placeholder="About Me" required />
-      <span id="card-url-error" className="form__field form__field_error"></span>
-    </PopupWithForm>
-
-    {/* Add New Card Popup */}
-    <PopupWithForm name="add-card" title="New Place" submitButton="Save" isOpen={props.isAddNewCard} onClose={props.onClose}>
-      <input id="card-title" type="text" name="name" className="form__input form__input_type_card-title" placeholder="Title" minLength="2" maxLength="30" required />
-      <span id="card-title-error" className="form__field form__field_error"></span>
-      <input id="card-url" type="url" name="link" className="form__input form__input_type_card-url" placeholder="Image link" required />
-      <span id="card-url-error" className="form__field form__field_error"></span>
-    </PopupWithForm>
-
-    {/* Delete card confirmation */}
-    <PopupWithForm name="delete" title="Are You Sure?" submitButton="Yes" isOpen={props.isDeleteCard} onClose={props.onClose} />
-
-    {/* Expand card on full-screen */}
-    <PopupWithImage src={props.selectedCard.src} title={props.selectedCard.title} isOpen={props.isImageExpand} onClose={props.onClose} />
-
     </>
   )
 }
