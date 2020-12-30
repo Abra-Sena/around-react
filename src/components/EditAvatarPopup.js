@@ -14,6 +14,8 @@ function EditAvatarPopup(props) {
       name="edit-avatar"
       title="Change Profile Picture"
       submitButton="Save"
+      isOpen={props.isOpen}
+      onClose={props.onClose}
       onSubmit={handleSubmit}
     >
       <input ref={avatarRefs} id="avatar-url" type="url" name="link" className="form__input form__input_type_avatar-url" placeholder="Avatar link" required />

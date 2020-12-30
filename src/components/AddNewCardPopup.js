@@ -17,7 +17,7 @@ function AddPlacePopup(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
     props.handleAddNewCard({
-      title: cardTitle,
+      name: cardTitle,
       link: cardLink
     });
   }
@@ -31,9 +31,9 @@ function AddPlacePopup(props) {
       onClose={props.onClose}
       onSubmit={handleSubmit}
     >
-      <input id="card-title" type="text" name="name" className="form__input form__input_type_card-title" placeholder="Title" minLength="2" maxLength="30" onChange={handleCardTitle} value={cardTitle} required />
+      <input id="card-title" type="text" name="name" className="form__input form__input_type_card-title" placeholder="Title" minLength="2" maxLength="30" value={cardTitle} onChange={handleCardTitle} required />
       <span id="card-title-error" className="form__field form__field_error"></span>
-      <input id="card-url" type="url" name="link" className="form__input form__input_type_card-url" placeholder="Image link" onChange={handleCardLink} value={cardLink} required />
+      <input id="card-url" type="url" name="link" className="form__input form__input_type_card-url" placeholder="Image link" value={cardLink} onChange={handleCardLink} required />
       <span id="card-url-error" className="form__field form__field_error"></span>
     </PopupWithForm>
   )

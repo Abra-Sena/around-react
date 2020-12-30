@@ -36,7 +36,6 @@ function Main(props) {
                 src={card.src}
                 title={card.title}
                 likes={card.likes}
-                _id={card._id}
                 owner={card.owner}
                 onCardClick={() => props.handleCardClick(card)}
                 onDeleteClick={(card) => props.handleCardDelete(card)}
