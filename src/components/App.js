@@ -7,8 +7,8 @@ import AddPlacePopup from './AddNewCardPopup';
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import PopupWithImage from './PopupWithImage';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   // current user context
@@ -76,13 +76,6 @@ function App() {
       .catch(err => console.log(err));
   }
 
-  function handleAddNewCard({name, link}) {
-    api.addCard({name, link})
-      .then((newCard) => setCards([newCard, ...cards]) )
-      .then(() => setAddNewCardPopup(false))
-      .catch(err => console.log(err));
-  }
-
   function handleEditAvatar(avatar) {
     api.setUserAvatar({avatar})
       .then((res) => { setCurrentUser(res) })
@@ -97,6 +90,24 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  function transformCard(cardItem) {
+    return {
+      alt: cardItem.name,
+      title: cardItem.name,
+      src: cardItem.link,
+      id: cardItem._id,
+      owner: cardItem.owner,
+      likes: cardItem.likes
+    }
+  }
+
+  function handleAddNewCard({name, link}) {
+    api.addCard({name, link})
+      .then((newCard) => setCards([transformCard(newCard), ...cards]) )
+      .then(() => setAddNewCardPopup(false))
+      .catch(err => console.log(err));
+  }
+
   React.useEffect(() => {
     api.getUserInfo()
       .then((res) => {
@@ -107,14 +118,7 @@ function App() {
     api.getInitialCards()
     .then((initialCards) => {
       setCards(
-        initialCards.map((cardItem) => ({
-          alt: cardItem.name,
-          title: cardItem.name,
-          src: cardItem.link,
-          id: cardItem._id,
-          owner: cardItem.owner,
-          likes: cardItem.likes
-        }))
+        initialCards.map(transformCard)
       )
     })
     .catch(err => console.log(err));

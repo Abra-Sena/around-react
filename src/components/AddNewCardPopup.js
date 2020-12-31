@@ -1,10 +1,13 @@
 import React from 'react';
+// import { defaultSettings } from "../utils/constants";
+// import FormValidator from "./FormValidator";
 import PopupWithForm from './PopupWithForm';
 
 
 function AddPlacePopup(props) {
   const [cardTitle, setCardTitle] = React.useState("");
   const [cardLink, setCardLink] = React.useState("");
+  // const addCardValidator = new FormValidator(defaultSettings, '.form_add-card');
 
   function handleCardTitle(evt) {
     setCardTitle(evt.target.value);
@@ -16,6 +19,8 @@ function AddPlacePopup(props) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    //validate add new card
+    // addCardValidator.enableValidation();
     props.handleAddNewCard({
       name: cardTitle,
       link: cardLink
@@ -27,6 +32,7 @@ function AddPlacePopup(props) {
       name="add-card"
       title="New Place"
       submitButton="Save"
+      submitButtonClassName="form__submit"
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}

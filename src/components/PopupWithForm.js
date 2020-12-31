@@ -15,7 +15,7 @@ function PopupWithForm(props) {
         <fieldset className="form__field">
           {props.children}
         </fieldset>
-        <button type="submit" aria-label="save-edit-avatar" className="form__submit">{props.submitButton}</button>
+        <button type="submit" aria-label="save-edit-avatar" className={props.submitButtonClassName}>{props.submitButton}</button>
         <button type="button" aria-label="close-edit-avatar" className="popup__close form__close-button" onClick={props.onClose}></button>
       </form>
     </div>
