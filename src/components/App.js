@@ -7,7 +7,7 @@ import AddPlacePopup from './AddNewCardPopup';
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import PopupWithImage from './PopupWithImage';
-import api from "../utils/api";
+import api from "../utils/utils";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
 
     res.then((newCard) => {
       // Create a new array based on the existing one and putting a new card into it
-      const newCards = cards.map((c) => c.id === card.id ? newCard : c);
+      const newCards = cards.map((c) => c.id === card.id ? transformCard(newCard) : c);
       // Update the state
       setCards(newCards);
     }).catch(err => console.log(err));
