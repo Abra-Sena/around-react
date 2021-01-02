@@ -12,6 +12,7 @@ function EditAvatarPopup(props) {
     //validate edit avatar
     // editAvatarValidator.enableValidation();
     props.onUpdateAvatar(avatarRefs.current.value);
+    avatarRefs.current.value ='';
   }
 
   return (

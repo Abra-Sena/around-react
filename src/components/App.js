@@ -6,7 +6,7 @@ import PopupWithForm from './PopupWithForm';
 import AddPlacePopup from './AddNewCardPopup';
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
-import PopupWithImage from './PopupWithImage';
+import ImagePopup from './ImagePopup';
 import api from "../utils/api";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -43,7 +43,7 @@ function App() {
   function handleCardLike(card) {
     // Check one more time if this card was already liked
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    let res = isLiked ? api.removeCardLike(card.id) : api.addCardLike(card.id);
+    const res = isLiked ? api.removeCardLike(card.id) : api.addCardLike(card.id);
 
     res.then((newCard) => {
       // Create a new array based on the existing one and putting a new card into it
@@ -52,20 +52,23 @@ function App() {
       setCards(newCards);
     }).catch(err => console.log(err));
   }
-  function handleEscClose(evt) {
-    if(evt.which === 27) {
-      this.close();
-    }
-  }
-  function handlePopupClose(evt) {
-    if(evt.target !== evt.currentTarget) return;
-
+  function closeAllPopups() {
     setEditAvatarPopup(false);
     setEditProfilePopup(false);
     setAddNewCardPopup(false);
     setDeleteCardPopup(false);
-    setSelectedCard(selectedCard);
     setImageExpand(false);
+  }
+  // to be handled later
+  // function handleEscClose(evt) {
+  //   if(evt.key === 'Escape') {
+  //     closeAllPopups();
+  //   }
+  // }
+  function handlePopupClose(evt) {
+    if(evt.target !== evt.currentTarget) return;
+
+    closeAllPopups();
   }
   function handleCardDelete(card) {
     api.removeCard(card.id)
@@ -140,7 +143,6 @@ function App() {
         handleCardDelete={(card) => handleCardDelete(card)}
         // functionnalities
         handleCardClick={(card) => handleCardClick(card)}
-        handleEscClose={handleEscClose}
         onCardClick={(card) => handleCardClick(card)}
         onDeleteClick={(card) => handleCardDelete(card)}
         onLickeClick={(card) => handleCardLike(card)}
@@ -160,7 +162,7 @@ function App() {
       <PopupWithForm name="delete" title="Are You Sure?" submitButton="Yes" isOpen={isDeleteCard} onClose={handlePopupClose} onSubmit={handleCardDelete} />
 
       {/* Expand card on full-screen */}
-      <PopupWithImage src={selectedCard.src} title={selectedCard.title} isOpen={isImageExpand} onClose={handlePopupClose} />
+      <ImagePopup src={selectedCard.src} title={selectedCard.title} isOpen={isImageExpand} onClose={handlePopupClose} />
 
     </CurrentUserContext.Provider>
   );

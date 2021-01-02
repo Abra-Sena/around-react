@@ -28,8 +28,8 @@ function EditProfilePopup(props) {
 
   // copy user data into popup form on open
   React.useEffect(() => {
-    setName(currentUser && currentUser.name);
-    setAbout(currentUser && currentUser.about);
+    setName(currentUser.name || '');
+    setAbout(currentUser.about || '');
   }, [currentUser]);
 
 
